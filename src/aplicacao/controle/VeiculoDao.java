@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VeiculoControle {
+public class VeiculoDao {
     public void insert(Veiculo veiculo) {
         Connection conn = null;
         PreparedStatement ps = null;
@@ -218,7 +218,41 @@ public class VeiculoControle {
         }
         return null;
     }
-
-
-
+    
+    public Boolean existis(Integer codigo) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        try {
+            conn = Conexao.getConnection();
+            String sql = "select count(*) n_veiculos from veiculos where codvei = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                if(rs.getInt(1) > 0){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch(SQLException e) {
+            System.out.println("ERRO: " + e.getMessage());
+        } finally {
+            if( ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    System.out.println("ERRO: " + ex.getMessage());
+                }
+            }
+            if(conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    System.out.println("ERRO: " + ex.getMessage());
+                }
+            }
+        }
+        return false;
+    }
 }

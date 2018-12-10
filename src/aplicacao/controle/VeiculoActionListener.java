@@ -19,12 +19,23 @@ public class VeiculoActionListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        VeiculoDao dao = new VeiculoDao();
+        Veiculo v  = new Veiculo();
+        v = frame.getVeiculo();
+        
         switch(ae.getActionCommand()){
             case "Fechar":
+                frame.dispose();
             break;
             case "Salvar":
+                if(!dao.existis(v.getCodVei())){
+                    dao.insert(v);
+                } else {
+                    dao.update(v);
+                }
             break;
             case "Excluir":
+                dao.delete(v);
             break;
         }
     }
