@@ -1,4 +1,8 @@
+package aplicacao.view;
 
+
+import aplicacao.controle.GravaLog;
+import aplicacao.controle.MotoristaActionListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -114,9 +118,7 @@ public class CadastroMotorista extends JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(11, 11, 11)
                                 .addComponent(lblValidCNH))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtValidadeCNH))))
+                            .addComponent(txtValidadeCNH)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addComponent(btnLimpar)

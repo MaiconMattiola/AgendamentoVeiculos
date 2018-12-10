@@ -1,3 +1,5 @@
+package aplicacao.modelo;
+
 
 import java.util.Objects;
 

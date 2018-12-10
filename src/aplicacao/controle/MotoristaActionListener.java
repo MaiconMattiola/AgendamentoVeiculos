@@ -1,15 +1,18 @@
+package aplicacao.controle;
 
+
+import aplicacao.view.CadastroMotorista;
+import aplicacao.modelo.Motorista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 
-public class VeiculoActionListener implements ActionListener{
-    private CadastroVeiculos frame;
-    List<Veiculo> veiculos = new ArrayList<>();
+public class MotoristaActionListener implements ActionListener{
+    private CadastroMotorista frame;
+    List<Motorista> motorista = new ArrayList<>();
     
-    public VeiculoActionListener(CadastroVeiculos frame){
+    public MotoristaActionListener(CadastroMotorista frame){
         this.frame = frame;
     }
 

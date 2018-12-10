@@ -1,4 +1,7 @@
+package aplicacao.view;
 
+
+import aplicacao.controle.LoginActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;

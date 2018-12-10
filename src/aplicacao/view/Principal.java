@@ -1,3 +1,6 @@
+package aplicacao.view;
+
+import aplicacao.controle.GravaLog;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

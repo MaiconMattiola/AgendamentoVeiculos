@@ -1,3 +1,5 @@
+package aplicacao.modelo;
+
 
 import java.time.LocalDate;
 import java.util.Objects;

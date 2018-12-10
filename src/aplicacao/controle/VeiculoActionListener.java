@@ -1,17 +1,22 @@
+package aplicacao.controle;
 
+
+import aplicacao.view.CadastroVeiculos;
+import aplicacao.modelo.Veiculo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
-public class AgendamentoActionListener implements ActionListener{
-    private CadastroAgendamento frame;
-    List<Agendamento> agendamentos = new ArrayList<>();
+public class VeiculoActionListener implements ActionListener{
+    private CadastroVeiculos frame;
+    List<Veiculo> veiculos = new ArrayList<>();
     
-    public AgendamentoActionListener(CadastroAgendamento frame){
+    public VeiculoActionListener(CadastroVeiculos frame){
         this.frame = frame;
-    } 
-    
+    }
+
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch(ae.getActionCommand()){
@@ -23,5 +28,4 @@ public class AgendamentoActionListener implements ActionListener{
             break;
         }
     }
-    
 }
