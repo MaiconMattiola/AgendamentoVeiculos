@@ -4,6 +4,7 @@ package aplicacao.controle;
 import aplicacao.view.Login;
 import aplicacao.view.Principal;
 import aplicacao.modelo.Motorista;
+import aplicacao.modelo.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -29,12 +30,13 @@ public class LoginActionListener implements ActionListener{
             case "Login":
                 Principal princi = new Principal();
                 princi.setVisible(true);
-                String senha   = frame.getTxtPassword().getText().toString();
-                String usuario = frame.getTxtUsuario().getText().toString();
-                
                 GravaLog log = new GravaLog();
+                
+                Usuario u  = new Usuario();
+                u = frame.getUsuario();
+                
                 try {
-                    log.escreverLog(usuario, 1);
+                    log.escreverLog(u.getUsuario(), 1);
                     log.acessoLog(frame.getTitle());
                     princi.setTitle("Agendamento de Veículos - Bem vindo(a) "+log.Ler("logado.txt")+"!!!");
                 } catch (Exception ex) {

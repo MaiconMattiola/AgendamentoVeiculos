@@ -14,13 +14,12 @@ public class VeiculoDao {
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "insert into veiculos (codvei, descricao, placa, renavan, tipo) values(?,?,?,?,?)";
+            String sql = "insert into veiculos (codvei, descricao, placa, renavan, tipo) values((select coalesce(max(codvei), 0) + 1 from veiculos),?,?,?,?)";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, veiculo.getCodVei());
-            ps.setString(2, veiculo.getDescricao());
-            ps.setString(3, veiculo.getPlaca());
-            ps.setString(4, veiculo.getRenavan());
-            ps.setInt(5, veiculo.getTipo());
+            ps.setString(1, veiculo.getDescricao());
+            ps.setString(2, veiculo.getPlaca());
+            ps.setString(3, veiculo.getRenavan());
+            ps.setInt(4, veiculo.getTipo());
             ps.execute();
 
             conn.commit();

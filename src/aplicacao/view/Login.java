@@ -2,6 +2,7 @@ package aplicacao.view;
 
 
 import aplicacao.controle.LoginActionListener;
+import aplicacao.modelo.Usuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
@@ -150,6 +151,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
     }
+    
+     public Usuario getUsuario() {
+        Usuario u = new Usuario();
+        u.setUsuario(txtUsuario.getText());
+        u.setSenha(txtPassword.getText());
+        return u;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -162,75 +170,4 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 
-    public LoginActionListener getAction() {
-        return action;
-    }
-
-    public void setAction(LoginActionListener action) {
-        this.action = action;
-    }
-
-    public JButton getBtnCancelar() {
-        return btnCancelar;
-    }
-
-    public void setBtnCancelar(JButton btnCancelar) {
-        this.btnCancelar = btnCancelar;
-    }
-
-    public JButton getBtnLogin() {
-        return btnLogin;
-    }
-
-    public void setBtnLogin(JButton btnLogin) {
-        this.btnLogin = btnLogin;
-    }
-
-    public JLabel getjLabel2() {
-        return jLabel2;
-    }
-
-    public void setjLabel2(JLabel jLabel2) {
-        this.jLabel2 = jLabel2;
-    }
-
-    public JSeparator getjSeparator1() {
-        return jSeparator1;
-    }
-
-    public void setjSeparator1(JSeparator jSeparator1) {
-        this.jSeparator1 = jSeparator1;
-    }
-
-    public JLabel getLblSenha() {
-        return lblSenha;
-    }
-
-    public void setLblSenha(JLabel lblSenha) {
-        this.lblSenha = lblSenha;
-    }
-
-    public JLabel getLblUsuario() {
-        return lblUsuario;
-    }
-
-    public void setLblUsuario(JLabel lblUsuario) {
-        this.lblUsuario = lblUsuario;
-    }
-
-    public JPasswordField getTxtPassword() {
-        return txtPassword;
-    }
-
-    public void setTxtPassword(JPasswordField txtPassword) {
-        this.txtPassword = txtPassword;
-    }
-
-    public JTextField getTxtUsuario() {
-        return txtUsuario;
-    }
-
-    public void setTxtUsuario(JTextField txtUsuario) {
-        this.txtUsuario = txtUsuario;
-    }
 }

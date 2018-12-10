@@ -94,7 +94,6 @@ public class CadastroVeiculos extends JInternalFrame {
         });
 
         btnExcluir.setText("Excluir");
-        btnExcluir.setEnabled(false);
 
         comboTipo.setEditable(true);
         comboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Carro", "Utilitário", "Caminhão", "Cavalo Mecânico" }));
