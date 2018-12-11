@@ -26,41 +26,30 @@
           <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblCodMotorista" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtCodigoMotorista" min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="comboTipoCNH" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblTipoCNH" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="txtNomeMotorista" alignment="0" min="-2" pref="209" max="-2" attributes="0"/>
-                          <Component id="lblNomeMotorista" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="lblNumeroCNH" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="txtNumeroCNH" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="lblNumeroCNH" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNumeroCNH" min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="txtValidadeCNH" min="-2" pref="94" max="-2" attributes="0"/>
+                          <Component id="lblValidCNH" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="comboTipoCNH" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblTipoCNH" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                              <Component id="lblValidCNH" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="txtValidadeCNH" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="90" pref="92" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
@@ -71,9 +60,25 @@
                       <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="lblCodMotorista" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCodigoMotorista" min="-2" pref="49" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="lblNomeMotorista" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="txtNomeMotorista" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -88,23 +93,23 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblCodMotorista" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblNomeMotorista" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblNumeroCNH" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtCodigoMotorista" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtNomeMotorista" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtNumeroCNH" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblTipoCNH" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblValidCNH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNumeroCNH" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="txtValidadeCNH" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="comboTipoCNH" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtNumeroCNH" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -113,7 +118,7 @@
                   <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="19" max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -141,7 +146,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblNumeroCNH">
       <Properties>
-        <Property name="text" type="java.lang.String" value="N&#xfa;mero da CNH:"/>
+        <Property name="text" type="java.lang.String" value="N&#xfa;mero CNH:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblValidCNH">
@@ -151,7 +156,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lblTipoCNH">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo da CNH:"/>
+        <Property name="text" type="java.lang.String" value="Categoria CNH:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCodigoMotorista">
@@ -188,7 +193,6 @@
     <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
-        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JComboBox" name="comboTipoCNH">

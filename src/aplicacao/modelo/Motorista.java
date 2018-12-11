@@ -1,7 +1,4 @@
 package aplicacao.modelo;
-
-
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class Motorista {
@@ -9,7 +6,7 @@ public class Motorista {
     private String nome;
     private Integer CNH;
     private Integer tipoCNH;
-    private LocalDate valCNH;
+    private String valCNH;
 
     public Integer getCodMot() {
         return codMot;
@@ -43,11 +40,11 @@ public class Motorista {
         this.tipoCNH = tipoCNH;
     }
 
-    public LocalDate getValCNH() {
+    public String getValCNH() {
         return valCNH;
     }
 
-    public void setValCNH(LocalDate valCNH) {
+    public void setValCNH(String valCNH) {
         this.valCNH = valCNH;
     }
     

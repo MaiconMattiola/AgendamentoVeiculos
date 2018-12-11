@@ -18,12 +18,23 @@ public class MotoristaActionListener implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent ae) {
+        MotoristaDao dao = new MotoristaDao();
+        Motorista m  = new Motorista();
+        m = frame.getMotorista();
+        
         switch(ae.getActionCommand()){
             case "Fechar":
+                frame.dispose();
             break;
             case "Salvar":
+                if(!dao.existis(m.getCodMot())){
+                    dao.insert(m);
+                } else {
+                    dao.update(m);
+                }
             break;
             case "Excluir":
+                dao.delete(m);
             break;
         }
     }
