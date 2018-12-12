@@ -14,7 +14,7 @@ public class MotoristaDao {
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "insert into motoristas (codMot, nome, CNH, tipoCNH, valCNH) values((select coalesce(max(codMot), 0) + 1 from motorista),?,?,?,?)";
+            String sql = "insert into motoristas (codMot, nome, CNH, tipoCNH, valCNH) values((select coalesce(max(codMot), 0) + 1 from motoristas),?,?,?,?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, motorista.getNome());
             ps.setInt(2, motorista.getCNH());

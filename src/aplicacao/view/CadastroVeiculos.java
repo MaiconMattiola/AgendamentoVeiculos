@@ -34,7 +34,12 @@ public class CadastroVeiculos extends JInternalFrame {
 
     public Veiculo getVeiculo() {
         Veiculo v = new Veiculo();
-        v.setCodVei(Integer.valueOf(txCodVeic.getText()));
+        
+        if (txCodVeic.getText().equals("")) {
+            v.setCodVei(0);
+        } else {
+            v.setCodVei(Integer.valueOf(txCodVeic.getText()));
+        }
         v.setDescricao(txtDescVeic.getText());
         v.setPlaca(txtPlaca.getText());
         v.setRenavan(txtRenavan.getText());

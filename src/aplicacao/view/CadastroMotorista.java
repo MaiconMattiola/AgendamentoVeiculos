@@ -34,7 +34,12 @@ public class CadastroMotorista extends JInternalFrame {
     
     public Motorista getMotorista() {
         Motorista m = new Motorista();
-        m.setCodMot(Integer.valueOf(txtCodigoMotorista.getText()));
+        if (txtCodigoMotorista.getText().equals("")) {
+            m.setCodMot(0);
+        } else {
+            m.setCodMot(Integer.valueOf(txtCodigoMotorista.getText()));
+        }
+        
         m.setNome(txtNomeMotorista.getText());
         m.setTipoCNH(comboTipoCNH.getSelectedIndex());
         m.setCNH(Integer.valueOf(txtNumeroCNH.getText()));
