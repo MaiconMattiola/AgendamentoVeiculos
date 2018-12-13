@@ -1,6 +1,7 @@
 package aplicacao.controle;
 
-import aplicacao.modelo.Veiculo;
+import aplicacao.utils.Conexao;
+import aplicacao.modelo.Agendamento;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,17 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgendamentoDao {
-    public void insert(Veiculo veiculo) {
+    public void insert(Agendamento agendamento) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "insert into veiculos (codvei, descricao, placa, renavan, tipo) values((select coalesce(max(codvei), 0) + 1 from veiculos),?,?,?,?)";
+            String sql = "insert into agendamentos (codAgend, dataIni, horaIni, kmIni, dataFin, horafin, kmFin, codMot, codVei, obs, status) values((select coalesce(max(codAgend), 0) + 1 from agendamentos),?,?,?,?,?,?,?,?,?,?)";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, veiculo.getDescricao());
-            ps.setString(2, veiculo.getPlaca());
-            ps.setString(3, veiculo.getRenavan());
-            ps.setInt(4, veiculo.getTipo());
+            ps.setString(1, agendamento.getDataIni());
+            ps.setString(2, agendamento.getHoraIni());
+            ps.setInt(3, agendamento.getKmIni());
+            ps.setString(4, agendamento.getDataFin());
+            ps.setString(5, agendamento.getHorafin());
+            ps.setInt(6, agendamento.getKmFin());
+            ps.setInt(7, agendamento.getCodMot());
+            ps.setInt(8, agendamento.getCodVei());
+            ps.setString(9, agendamento.getObs());
+            ps.setInt(10, agendamento.getStatus());
+
             ps.execute();
 
             conn.commit();
@@ -53,18 +61,24 @@ public class AgendamentoDao {
         }
     }
 
-    public void update(Veiculo veiculo) {
+    public void update(Agendamento agendamento) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "update veiculos set descricao = ?, placa = ?, renavan = ?, tipo = ? where codvei = ?";
+            String sql = "update agendamentos set dataIni = ?, horaIni = ?, kmIni = ?, dataFin = ?, horafin = ?, kmFin = ?, codMot = ?, codVei = ?, obs = ?, status = ? where codAgend = ?";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, veiculo.getDescricao());
-            ps.setString(2, veiculo.getPlaca());
-            ps.setString(3, veiculo.getRenavan());
-            ps.setInt(4, veiculo.getTipo());
-            ps.setInt(5, veiculo.getCodVei());
+            ps.setString(1, agendamento.getDataIni());
+            ps.setString(2, agendamento.getHoraIni());
+            ps.setInt(3, agendamento.getKmIni());
+            ps.setString(4, agendamento.getDataFin());
+            ps.setString(5, agendamento.getHorafin());
+            ps.setInt(6, agendamento.getKmFin());
+            ps.setInt(7, agendamento.getCodMot());
+            ps.setInt(8, agendamento.getCodVei());
+            ps.setString(9, agendamento.getObs());
+            ps.setInt(10, agendamento.getStatus());
+            ps.setInt(11, agendamento.getCodAgend());
             ps.execute();
 
             conn.commit();
@@ -98,14 +112,14 @@ public class AgendamentoDao {
         }
     }
     
-    public void delete(Veiculo veiculo) {
+    public void delete(Agendamento agendamento) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "delete from veiculos where codvei = ?";
+            String sql = "delete from agendamentos where codAgend = ?";
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, veiculo.getCodVei());
+            ps.setInt(1, agendamento.getCodAgend());
             ps.execute();
 
             conn.commit();
@@ -139,24 +153,29 @@ public class AgendamentoDao {
         }
     }
 
-    public List<Veiculo> getAll() {
-        List<Veiculo> lista = new ArrayList<Veiculo>();
+    public List<Agendamento> getAll() {
+        List<Agendamento> lista = new ArrayList<Agendamento>();
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "select codvei, descricao, placa, renavan, tipo from veiculos";
+            String sql = "select codAgend, dataIni, horaIni, kmIni, dataFin, horafin, kmFin, codMot, codVei, obs, status from agendamentos";
             ps = conn.prepareStatement(sql);
 
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
-                Veiculo p = new Veiculo();
-                p.setCodVei(rs.getInt(1));
-                p.setDescricao(rs.getString(2));
-                p.setPlaca(rs.getString(3));
-                p.setRenavan(rs.getString(4));
-                p.setTipo(rs.getInt(5));
-                lista.add(p);
+                Agendamento a = new Agendamento();
+                a.setDataIni(rs.getString(1));
+                a.setHoraIni(rs.getString(2));
+                a.setKmIni(rs.getInt(3));
+                a.setDataFin(rs.getString(4));
+                a.setHorafin(rs.getString(5));
+                a.setKmFin(rs.getInt(6));
+                a.setCodMot(rs.getInt(7));
+                a.setCodVei(rs.getInt(8));
+                a.setObs(rs.getString(9));
+                a.setStatus(rs.getInt(10));
+                lista.add(a);
             }
         } catch(SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -179,23 +198,28 @@ public class AgendamentoDao {
         return lista;
     }
 
-    public Veiculo getVeiculo(Integer codigo) {
+    public Agendamento getAgendamento(Integer codigo) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "select codvei, descricao, placa, renavan, tipo from veiculos where codvei = ?";
+            String sql = "select codAgend, dataIni, horaIni, kmIni, dataFin, horafin, kmFin, codMot, codVei, obs, status from agendamentos where codAgend = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, codigo);
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
-                Veiculo p = new Veiculo();
-                p.setCodVei(rs.getInt(1));
-                p.setDescricao(rs.getString(2));
-                p.setPlaca(rs.getString(3));
-                p.setRenavan(rs.getString(4));
-                p.setTipo(rs.getInt(5));
-                return p;
+                Agendamento a = new Agendamento();
+                a.setDataIni(rs.getString(1));
+                a.setHoraIni(rs.getString(2));
+                a.setKmIni(rs.getInt(3));
+                a.setDataFin(rs.getString(4));
+                a.setHorafin(rs.getString(5));
+                a.setKmFin(rs.getInt(6));
+                a.setCodMot(rs.getInt(7));
+                a.setCodVei(rs.getInt(8));
+                a.setObs(rs.getString(9));
+                a.setStatus(rs.getInt(10));
+                return a;
             }
         } catch(SQLException e) {
             System.out.println("ERRO: " + e.getMessage());
@@ -223,7 +247,7 @@ public class AgendamentoDao {
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "select count(*) n_veiculos from veiculos where codvei = ?";
+            String sql = "select count(*) n_agend from agendamentos where codAgend = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, codigo);
             ResultSet rs = ps.executeQuery();

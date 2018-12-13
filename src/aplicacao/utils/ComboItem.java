@@ -1,14 +1,14 @@
 package aplicacao.utils;
 public class ComboItem {
-    private String value;
+    private Integer value;
     private String label;
     
-    public ComboItem(String value, String label) {
+    public ComboItem(Integer value, String label) {
         this.value = value;
         this.label = label;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return this.value;
     }
 

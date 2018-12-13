@@ -1,6 +1,7 @@
 package aplicacao.controle;
 
 
+import aplicacao.utils.GravaLog;
 import aplicacao.view.Login;
 import aplicacao.view.Principal;
 import aplicacao.modelo.Motorista;

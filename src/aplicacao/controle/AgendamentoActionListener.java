@@ -18,14 +18,24 @@ public class AgendamentoActionListener implements ActionListener{
     
     @Override
     public void actionPerformed(ActionEvent ae) {
+        AgendamentoDao dao = new AgendamentoDao();
+        Agendamento a  = new Agendamento();
+        a = frame.getAgendamento();
+        
         switch(ae.getActionCommand()){
             case "Fechar":
+                frame.dispose();
             break;
             case "Salvar":
+                if(!dao.existis(a.getCodAgend())){
+                    dao.insert(a);
+                } else {
+                    dao.update(a);
+                }
             break;
             case "Excluir":
+                dao.delete(a);
             break;
         }
     }
-    
 }

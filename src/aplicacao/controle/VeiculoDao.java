@@ -1,5 +1,6 @@
 package aplicacao.controle;
 
+import aplicacao.utils.Conexao;
 import aplicacao.modelo.Veiculo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

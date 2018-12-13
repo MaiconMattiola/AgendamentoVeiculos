@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
 public class VeiculoActionListener implements ActionListener{
@@ -24,8 +25,20 @@ public class VeiculoActionListener implements ActionListener{
         v = frame.getVeiculo();
         
         switch(ae.getActionCommand()){
+            case "Limpar":
+                limpaCampos();
+            break;
             case "Fechar":
                 frame.dispose();
+            break;
+            case "Buscar":
+                if(dao.existis(v.getCodVei())){
+                    Veiculo nv  = new Veiculo();
+                    nv = dao.getVeiculo(v.getCodVei());
+                    frame.setVeiculo(nv);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Não Há Resultados Para Sua Busca", "Atenção!!!", 0);
+                }
             break;
             case "Salvar":
                 if(!dao.existis(v.getCodVei())){
@@ -35,8 +48,24 @@ public class VeiculoActionListener implements ActionListener{
                 }
             break;
             case "Excluir":
-                dao.delete(v);
+                if(dao.existis(v.getCodVei())){
+                    dao.delete(v);
+                    limpaCampos();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Código Inexistente", "Atenção!!!", 0);
+                }
             break;
         }
+    }
+    
+    private void limpaCampos(){
+        Veiculo v  = new Veiculo();
+        
+        v.setCodVei(0);
+        v.setDescricao("");
+        v.setPlaca("");
+        v.setRenavan("");
+        v.setTipo(0);
+        frame.setVeiculo(v);
     }
 }

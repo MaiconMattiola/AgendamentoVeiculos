@@ -7,12 +7,12 @@ import java.util.Objects;
 
 public class Agendamento {
     private Integer codAgend;
-    private LocalDate dataIni;
-    private LocalTime horaIni;
-    private LocalDate dataFin;
-    private LocalTime horafin;
+    private String dataIni;
+    private String horaIni;
+    private String dataFin;
+    private String horafin;
     private Integer codMot;
-    private Integer codCar;
+    private Integer codVei;
     private Integer kmIni;
     private Integer kmFin;
     private String obs;
@@ -26,35 +26,35 @@ public class Agendamento {
         this.codAgend = codAgend;
     }
 
-    public LocalDate getDataIni() {
+    public String getDataIni() {
         return dataIni;
     }
 
-    public void setDataIni(LocalDate dataIni) {
+    public void setDataIni(String dataIni) {
         this.dataIni = dataIni;
     }
 
-    public LocalTime getHoraIni() {
+    public String getHoraIni() {
         return horaIni;
     }
 
-    public void setHoraIni(LocalTime horaIni) {
+    public void setHoraIni(String horaIni) {
         this.horaIni = horaIni;
     }
 
-    public LocalDate getDataFin() {
+    public String getDataFin() {
         return dataFin;
     }
 
-    public void setDataFin(LocalDate dataFin) {
+    public void setDataFin(String dataFin) {
         this.dataFin = dataFin;
     }
 
-    public LocalTime getHorafin() {
+    public String getHorafin() {
         return horafin;
     }
 
-    public void setHorafin(LocalTime horafin) {
+    public void setHorafin(String horafin) {
         this.horafin = horafin;
     }
 
@@ -66,12 +66,12 @@ public class Agendamento {
         this.codMot = codMot;
     }
 
-    public Integer getCodCar() {
-        return codCar;
+    public Integer getCodVei() {
+        return codVei;
     }
 
-    public void setCodCar(Integer codCar) {
-        this.codCar = codCar;
+    public void setCodVei(Integer codVei) {
+        this.codVei = codVei;
     }
 
     public Integer getKmIni() {
@@ -105,6 +105,8 @@ public class Agendamento {
     public void setStatus(Integer status) {
         this.status = status;
     }
+    
+    
     
     @Override
     public boolean equals(Object obj) {

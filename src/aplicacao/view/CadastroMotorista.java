@@ -1,7 +1,7 @@
 package aplicacao.view;
 
 
-import aplicacao.controle.GravaLog;
+import aplicacao.utils.GravaLog;
 import aplicacao.controle.MotoristaActionListener;
 import aplicacao.modelo.Motorista;
 import java.io.IOException;
@@ -87,11 +87,6 @@ public class CadastroMotorista extends JInternalFrame {
         btnLimpar.setText("Limpar");
 
         btnCancelar.setText("Cancelar");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
 
         btnSalvar.setText("Salvar");
 
@@ -190,10 +185,6 @@ public class CadastroMotorista extends JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
