@@ -1,9 +1,9 @@
 package aplicacao.controle;
 
 
+import aplicacao.exception.AgendamentoException;
 import aplicacao.view.CadastroMotorista;
 import aplicacao.modelo.Motorista;
-import aplicacao.modelo.Veiculo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -32,27 +32,39 @@ public class MotoristaActionListener implements ActionListener{
                 limpaCampos();
             break;
             case "Buscar":
-                if(dao.existis(m.getCodMot())){
-                    Motorista nv  = new Motorista();
-                    nv = dao.getMotorista(m.getCodMot());
-                    frame.setMotorista(nv);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Não Há Resultados Para Sua Busca", "Atenção!!!", 0);
+                try {
+                    if(dao.existis(m.getCodMot())){
+                        Motorista nv  = new Motorista();
+                        nv = dao.getMotorista(m.getCodMot());
+                        frame.setMotorista(nv);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Não Há Resultados Para Sua Busca", "Atenção!!!", 0);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
             case "Salvar":
-                if(!dao.existis(m.getCodMot())){
-                    dao.insert(m);
-                } else {
-                    dao.update(m);
+                try {
+                    if(!dao.existis(m.getCodMot())){
+                        dao.insert(m);
+                    } else {
+                        dao.update(m);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
             case "Excluir":
-                if(dao.existis(m.getCodMot())){
-                    dao.delete(m);
-                    limpaCampos();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Código Inexistente", "Atenção!!!", 0);
+                try {
+                    if(dao.existis(m.getCodMot())){
+                        dao.delete(m);
+                        limpaCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Código Inexistente", "Atenção!!!", 0);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
         }

@@ -1,7 +1,9 @@
 package aplicacao.controle;
 
+import aplicacao.exception.AgendamentoException;
 import aplicacao.utils.Conexao;
 import aplicacao.modelo.Motorista;
+import aplicacao.utils.GravaLog;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +12,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MotoristaDao {
-    public void insert(Motorista motorista) {
+    GravaLog log = new GravaLog();
+    
+    public void insert(Motorista motorista) throws AgendamentoException {
+        
+        if( motorista.getNome()== null || motorista.getNome().equals("")) {
+            throw new AgendamentoException("A inclusao da Nome e obrigatoria. ");
+        }
+        if( motorista.getCNH()== null || motorista.getCNH() == 0) {                
+            throw new AgendamentoException("A inclusao da CNH e obrigatoria. ");
+        }
+        if( motorista.getValCNH()== null || motorista.getValCNH().equals("")) {                
+            throw new AgendamentoException("A inclusao do Renavan e obrigatoria. ");
+        }
+        
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -26,13 +41,14 @@ public class MotoristaDao {
             conn.commit();
 
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -41,20 +57,33 @@ public class MotoristaDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
 
-    public void update(Motorista motorista) {
+    public void update(Motorista motorista) throws AgendamentoException {
+        
+        if( motorista.getNome()== null || motorista.getNome().equals("")) {
+            throw new AgendamentoException("A inclusao da Nome e obrigatoria. ");
+        }
+        if( motorista.getCNH()== null || motorista.getCNH() == 0) {                
+            throw new AgendamentoException("A inclusao da CNH e obrigatoria. ");
+        }
+        if( motorista.getValCNH()== null || motorista.getValCNH().equals("")) {                
+            throw new AgendamentoException("A inclusao do Renavan e obrigatoria. ");
+        }
+        
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -70,13 +99,14 @@ public class MotoristaDao {
 
             conn.commit();
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -86,20 +116,22 @@ public class MotoristaDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
     
-    public void delete(Motorista motorista) {
+    public void delete(Motorista motorista) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -111,13 +143,14 @@ public class MotoristaDao {
 
             conn.commit();
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -127,20 +160,22 @@ public class MotoristaDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
 
-    public List<Motorista> getAll() {
+    public List<Motorista> getAll() throws AgendamentoException {
         List<Motorista> lista = new ArrayList<Motorista>();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -160,27 +195,29 @@ public class MotoristaDao {
                 lista.add(p);
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
         return lista;
     }
 
-    public Motorista getMotorista(Integer codigo) {
+    public Motorista getMotorista(Integer codigo) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -199,27 +236,29 @@ public class MotoristaDao {
                 return p;
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
         return null;
     }
     
-    public Boolean existis(Integer codigo) {
+    public Boolean existis(Integer codigo) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -236,20 +275,22 @@ public class MotoristaDao {
                 }
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }

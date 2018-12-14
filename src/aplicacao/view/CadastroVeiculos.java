@@ -76,7 +76,11 @@ public class CadastroVeiculos extends JInternalFrame {
         txtPlaca = new javax.swing.JFormattedTextField();
         btnBuscar = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Cadastro de Veiculos");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

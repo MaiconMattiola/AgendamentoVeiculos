@@ -5,11 +5,14 @@ import aplicacao.utils.GravaLog;
 import aplicacao.controle.AgendamentoActionListener;
 import aplicacao.controle.MotoristaDao;
 import aplicacao.controle.VeiculoDao;
+import aplicacao.exception.AgendamentoException;
 import aplicacao.modelo.Agendamento;
 import aplicacao.modelo.Motorista;
 import aplicacao.modelo.Veiculo;
 import aplicacao.utils.ComboItem;
 import com.sun.javafx.css.Combinator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
@@ -40,8 +43,12 @@ public class CadastroAgendamento extends JInternalFrame {
         VeiculoDao dao = new VeiculoDao();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement(new ComboItem(0, ""));
-        for(Veiculo m : dao.getAll() ) {
-            model.addElement(new ComboItem(m.getCodVei(), m.getDescricao()));
+        try {
+            for(Veiculo m : dao.getAll() ) {
+                model.addElement(new ComboItem(m.getCodVei(), m.getDescricao()));
+            }
+        } catch (AgendamentoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Atenção!!!", 0);
         }
         
         comboCodVeiculo.setModel(model);
@@ -51,8 +58,12 @@ public class CadastroAgendamento extends JInternalFrame {
         MotoristaDao dao = new MotoristaDao();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         model.addElement(new ComboItem(0, ""));
-        for(Motorista m : dao.getAll() ) {
-            model.addElement(new ComboItem(m.getCodMot(), m.getNome()));
+        try {
+            for(Motorista m : dao.getAll() ) {
+                model.addElement(new ComboItem(m.getCodMot(), m.getNome()));
+            }
+        } catch (AgendamentoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Atenção!!!", 0);
         }
         
         comboCodMotorista.setModel(model);
@@ -148,7 +159,11 @@ public class CadastroAgendamento extends JInternalFrame {
         comboStatus = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Cadastro de Agendamentos");
 
         btnCancelar.setText("Fechar");

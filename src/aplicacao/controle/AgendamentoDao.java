@@ -1,7 +1,9 @@
 package aplicacao.controle;
 
+import aplicacao.exception.AgendamentoException;
 import aplicacao.utils.Conexao;
 import aplicacao.modelo.Agendamento;
+import aplicacao.utils.GravaLog;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +12,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AgendamentoDao {
-    public void insert(Agendamento agendamento) {
+    GravaLog log = new GravaLog();
+    
+    public void insert(Agendamento agendamento) throws AgendamentoException {
+        
+        if( agendamento.getDataIni()== null || agendamento.getDataIni().equals("")) {
+            throw new AgendamentoException("A inclusao da Data Inicial e obrigatoria. ");
+        }
+        if( agendamento.getHoraIni()== null || agendamento.getHoraIni().equals("")) {                
+            throw new AgendamentoException("A inclusao da Hora Inicial e obrigatoria. ");
+        }
+        if( agendamento.getKmIni()== null || agendamento.getKmIni() == 0) {                
+            throw new AgendamentoException("A inclusao do km Inicial e obrigatoria. ");
+        }
+        if( agendamento.getDataFin()== null || agendamento.getDataFin().equals("")) {
+            throw new AgendamentoException("A inclusao da Data Final e obrigatoria. ");
+        }
+        if( agendamento.getHorafin()== null || agendamento.getHorafin().equals("")) {                
+            throw new AgendamentoException("A inclusao da Hora Final e obrigatoria. ");
+        }
+        if( agendamento.getKmFin()== null || agendamento.getKmFin() == 0) {                
+            throw new AgendamentoException("A inclusao do km Final e obrigatoria. ");
+        }
+        if( agendamento.getCodMot()== null || agendamento.getCodMot() == 0) {                
+            throw new AgendamentoException("A inclusao do Motorista e obrigatoria. ");
+        }
+        if( agendamento.getCodVei()== null || agendamento.getCodVei() == 0) {                
+            throw new AgendamentoException("A inclusao do Veiculo e obrigatoria. ");
+        }
+        
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -33,13 +63,14 @@ public class AgendamentoDao {
             conn.commit();
 
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -48,20 +79,48 @@ public class AgendamentoDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
 
-    public void update(Agendamento agendamento) {
+    public void update(Agendamento agendamento) throws AgendamentoException {
+        
+        if( agendamento.getDataIni()== null || agendamento.getDataIni().equals("")) {
+            throw new AgendamentoException("A inclusao da Data Inicial e obrigatoria. ");
+        }
+        if( agendamento.getHoraIni()== null || agendamento.getHoraIni().equals("")) {                
+            throw new AgendamentoException("A inclusao da Hora Inicial e obrigatoria. ");
+        }
+        if( agendamento.getKmIni()== null || agendamento.getKmIni() == 0) {                
+            throw new AgendamentoException("A inclusao do km Inicial e obrigatoria. ");
+        }
+        if( agendamento.getDataFin()== null || agendamento.getDataFin().equals("")) {
+            throw new AgendamentoException("A inclusao da Data Final e obrigatoria. ");
+        }
+        if( agendamento.getHorafin()== null || agendamento.getHorafin().equals("")) {                
+            throw new AgendamentoException("A inclusao da Hora Final e obrigatoria. ");
+        }
+        if( agendamento.getKmFin()== null || agendamento.getKmFin() == 0) {                
+            throw new AgendamentoException("A inclusao do km Final e obrigatoria. ");
+        }
+        if( agendamento.getCodMot()== null || agendamento.getCodMot() == 0) {                
+            throw new AgendamentoException("A inclusao do Motorista e obrigatoria. ");
+        }
+        if( agendamento.getCodVei()== null || agendamento.getCodVei() == 0) {                
+            throw new AgendamentoException("A inclusao do Veiculo e obrigatoria. ");
+        }
+        
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -83,13 +142,14 @@ public class AgendamentoDao {
 
             conn.commit();
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -99,20 +159,22 @@ public class AgendamentoDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
     
-    public void delete(Agendamento agendamento) {
+    public void delete(Agendamento agendamento) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -124,13 +186,14 @@ public class AgendamentoDao {
 
             conn.commit();
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
 
             if(conn != null){
                 try {
                     conn.rollback();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
 
@@ -140,20 +203,22 @@ public class AgendamentoDao {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
     }
 
-    public List<Agendamento> getAll() {
+    public List<Agendamento> getAll() throws AgendamentoException {
         List<Agendamento> lista = new ArrayList<Agendamento>();
         Connection conn = null;
         PreparedStatement ps = null;
@@ -179,27 +244,29 @@ public class AgendamentoDao {
                 lista.add(a);
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
         return lista;
     }
 
-    public Agendamento getAgendamento(Integer codigo) {
+    public Agendamento getAgendamento(Integer codigo) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -224,27 +291,29 @@ public class AgendamentoDao {
                 return a;
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }
         return null;
     }
     
-    public Boolean existis(Integer codigo) {
+    public Boolean existis(Integer codigo) throws AgendamentoException {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -261,20 +330,22 @@ public class AgendamentoDao {
                 }
             }
         } catch(SQLException e) {
-            System.out.println("ERRO: " + e.getMessage());
+            log.logPrintStackTrace(e);
         } finally {
             if( ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
             if(conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    System.out.println("ERRO: " + ex.getMessage());
+                    log.logPrintStackTrace(ex);
+                    throw new AgendamentoException("Erro de SQL");
                 }
             }
         }

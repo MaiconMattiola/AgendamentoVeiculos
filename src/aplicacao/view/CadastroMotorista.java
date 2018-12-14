@@ -88,7 +88,11 @@ public class CadastroMotorista extends JInternalFrame {
         comboTipoCNH = new javax.swing.JComboBox<>();
         btnBuscar = new javax.swing.JButton();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         setTitle("Cadastro de Motoristas");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

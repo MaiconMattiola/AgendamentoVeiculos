@@ -8,11 +8,9 @@ import aplicacao.modelo.Motorista;
 import aplicacao.modelo.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class LoginActionListener implements ActionListener{
     private Login frame;
@@ -26,27 +24,30 @@ public class LoginActionListener implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         switch(ae.getActionCommand()){
             case "Cancelar":
-                frame.dispose();
+                System.exit(0);
             break;
             case "Login":
-                Principal princi = new Principal();
-                princi.setVisible(true);
-                GravaLog log = new GravaLog();
-                
+                UsuarioDao dao = new UsuarioDao();
                 Usuario u  = new Usuario();
                 u = frame.getUsuario();
                 
-                try {
-                    log.escreverLog(u.getUsuario(), 1);
-                    log.acessoLog(frame.getTitle());
-                    princi.setTitle("Agendamento de Veículos - Bem vindo(a) "+log.Ler("logado.txt")+"!!!");
-                } catch (Exception ex) {
-                    log.logPrintStackTrace(ex);
-                }
-                frame.dispose();
+                if(dao.existis(u)){
+                    Principal princi = new Principal();
+                    princi.setVisible(true);
+                    GravaLog log = new GravaLog();
+
+                    try {
+                        log.escreverLog(u.getUsuario(), 1);
+                        log.acessoLog(frame.getTitle());
+                        princi.setTitle("Agendamento de Veículos - Bem vindo(a) "+log.Ler("logado.txt")+"!!!");
+                    } catch (Exception ex) {
+                        log.logPrintStackTrace(ex);
+                    }
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Usuário ou Senha Incorretos", "Atenção!!!", 0);
+                }     
              
-            break;
-            case "Excluir":
             break;
         }
     }

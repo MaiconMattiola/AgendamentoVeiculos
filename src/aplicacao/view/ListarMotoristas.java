@@ -4,9 +4,13 @@ package aplicacao.view;
 import aplicacao.controle.MotoristaDao;
 import aplicacao.utils.GravaLog;
 import aplicacao.controle.VeiculoDao;
+import aplicacao.exception.AgendamentoException;
 import aplicacao.modelo.Motorista;
 import aplicacao.modelo.Veiculo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarMotoristas extends JInternalFrame {
@@ -34,8 +38,12 @@ public class ListarMotoristas extends JInternalFrame {
         model.addColumn("Numero CNH");
         model.addColumn("Validade");
         
-        for(Motorista m : dao.getAll() ) {
-            model.addRow(new Object[] { m.getCodMot(), m.getNome(), m.getTipoCNHDesc(), m.getCNH(), m.getValCNH()});
+        try {
+            for(Motorista m : dao.getAll() ) {
+                model.addRow(new Object[] { m.getCodMot(), m.getNome(), m.getTipoCNHDesc(), m.getCNH(), m.getValCNH()});
+            }
+        } catch (AgendamentoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Atenção!!!", 0);
         }
         tableDados.setModel(model);   
     }
@@ -53,7 +61,7 @@ public class ListarMotoristas extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Cadastro de Veiculos");
+        setTitle("Lista de Motoristas");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("LISTA DE MOTORISTAS");

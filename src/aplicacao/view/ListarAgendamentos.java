@@ -4,10 +4,14 @@ package aplicacao.view;
 import aplicacao.controle.AgendamentoDao;
 import aplicacao.controle.MotoristaDao;
 import aplicacao.controle.VeiculoDao;
+import aplicacao.exception.AgendamentoException;
 import aplicacao.modelo.Agendamento;
 import aplicacao.utils.GravaLog;
 import aplicacao.modelo.Motorista;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class ListarAgendamentos extends JInternalFrame {
@@ -44,10 +48,14 @@ public class ListarAgendamentos extends JInternalFrame {
         model.addColumn("Status");
         model.addColumn("Observações");
         
-        for(Agendamento m : daoA.getAll() ) {
-            String veiculo = daoV.getVeiculo(m.getCodVei()).getDescricao();
-            String motorista = daoM.getMotorista(m.getCodMot()).getNome();
-            model.addRow(new Object[] { m.getCodAgend(), veiculo, motorista, m.getDataIni(), m.getHoraIni(), m.getKmIni(), m.getDataFin(), m.getHorafin(), m.getKmFin(), m.getStatusDesc(), m.getObs()});
+        try {
+            for(Agendamento m : daoA.getAll() ) {
+                String veiculo = daoV.getVeiculo(m.getCodVei()).getDescricao();
+                String motorista = daoM.getMotorista(m.getCodMot()).getNome();
+                model.addRow(new Object[] { m.getCodAgend(), veiculo, motorista, m.getDataIni(), m.getHoraIni(), m.getKmIni(), m.getDataFin(), m.getHorafin(), m.getKmFin(), m.getStatusDesc(), m.getObs()});
+            }
+        } catch (AgendamentoException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Atenção!!!", 0);
         }
         tableDados.setModel(model);   
     }
@@ -65,7 +73,7 @@ public class ListarAgendamentos extends JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
-        setTitle("Cadastro de Veiculos");
+        setTitle("Lista de Agendamentos");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("LISTA DE AGENDAMENTOS");

@@ -1,6 +1,7 @@
 package aplicacao.controle;
 
 
+import aplicacao.exception.AgendamentoException;
 import aplicacao.view.CadastroAgendamento;
 import aplicacao.modelo.Agendamento;
 import java.awt.event.ActionEvent;
@@ -31,27 +32,39 @@ public class AgendamentoActionListener implements ActionListener{
                 limpaCampos();
             break;
             case "Buscar":
-                if(dao.existis(a.getCodAgend())){
-                    Agendamento nv  = new Agendamento();
-                    nv = dao.getAgendamento(a.getCodAgend());
-                    frame.setAgendamento(nv);
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Não Há Resultados Para Sua Busca", "Atenção!!!", 0);
+                try {
+                    if(dao.existis(a.getCodAgend())){
+                        Agendamento nv  = new Agendamento();
+                        nv = dao.getAgendamento(a.getCodAgend());
+                        frame.setAgendamento(nv);
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Não Há Resultados Para Sua Busca", "Atenção!!!", 0);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
             case "Salvar":
-                if(!dao.existis(a.getCodAgend())){
-                    dao.insert(a);
-                } else {
-                    dao.update(a);
+                try {
+                    if(!dao.existis(a.getCodAgend())){
+                        dao.insert(a);
+                    } else {
+                        dao.update(a);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
             case "Excluir":
-                if(dao.existis(a.getCodAgend())){
-                    dao.delete(a);
-                    limpaCampos();
-                } else {
-                    JOptionPane.showMessageDialog(frame, "Código Inexistente", "Atenção!!!", 0);
+                try {
+                    if(dao.existis(a.getCodAgend())){
+                        dao.delete(a);
+                        limpaCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Código Inexistente", "Atenção!!!", 0);
+                    }
+                } catch (AgendamentoException ex) {
+                    JOptionPane.showMessageDialog(frame, ex.getMessage(), "Atenção!!!", 0);
                 }
             break;
         }
