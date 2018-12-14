@@ -1,22 +1,18 @@
 package aplicacao.view;
 
 
+import aplicacao.controle.MotoristaDao;
 import aplicacao.utils.GravaLog;
-import aplicacao.controle.VeiculoActionListener;
 import aplicacao.controle.VeiculoDao;
+import aplicacao.modelo.Motorista;
 import aplicacao.modelo.Veiculo;
-import java.io.IOException;
-import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-public class ListarVeiculos extends JInternalFrame {
+public class ListarMotoristas extends JInternalFrame {
     
     
-    public ListarVeiculos() {
+    public ListarMotoristas() {
         initComponents();
         GravaLog log = new GravaLog();
         try {
@@ -25,7 +21,7 @@ public class ListarVeiculos extends JInternalFrame {
             log.logPrintStackTrace(ex);
         }
         
-        VeiculoDao dao = new VeiculoDao();
+        MotoristaDao dao = new MotoristaDao();
         DefaultTableModel model = new DefaultTableModel();
         
         while (model.getRowCount() > 0) {
@@ -33,13 +29,13 @@ public class ListarVeiculos extends JInternalFrame {
         }
         
         model.addColumn("Código");
-        model.addColumn("Descrição");
-        model.addColumn("Placa");
-        model.addColumn("Renavan");
-        model.addColumn("Tipo");
+        model.addColumn("Nome");
+        model.addColumn("Tipo CNH");
+        model.addColumn("Numero CNH");
+        model.addColumn("Validade");
         
-        for(Veiculo m : dao.getAll() ) {
-            model.addRow(new Object[] { m.getCodVei(), m.getDescricao(), m.getPlaca(), m.getRenavan(), m.getTipoDesc()});
+        for(Motorista m : dao.getAll() ) {
+            model.addRow(new Object[] { m.getCodMot(), m.getNome(), m.getTipoCNHDesc(), m.getCNH(), m.getValCNH()});
         }
         tableDados.setModel(model);   
     }
@@ -60,7 +56,7 @@ public class ListarVeiculos extends JInternalFrame {
         setTitle("Cadastro de Veiculos");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel1.setText("LISTA DE VEÍCULOS");
+        jLabel1.setText("LISTA DE MOTORISTAS");
 
         tableDados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,18 +86,19 @@ public class ListarVeiculos extends JInternalFrame {
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 561, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(241, 241, 241)
+                .addGap(218, 218, 218)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(5, 5, 5)
                 .addComponent(jLabel1)
-                .addGap(11, 11, 11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)

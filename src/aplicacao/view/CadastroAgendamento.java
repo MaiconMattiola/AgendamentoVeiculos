@@ -9,8 +9,10 @@ import aplicacao.modelo.Agendamento;
 import aplicacao.modelo.Motorista;
 import aplicacao.modelo.Veiculo;
 import aplicacao.utils.ComboItem;
+import com.sun.javafx.css.Combinator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
 public class CadastroAgendamento extends JInternalFrame {
     private AgendamentoActionListener action = new AgendamentoActionListener(this);
@@ -18,6 +20,8 @@ public class CadastroAgendamento extends JInternalFrame {
     public CadastroAgendamento() {
         initComponents();
         
+        btnLimpar.addActionListener(action);
+        btnBuscar.addActionListener(action);
         btnCancelar.addActionListener(action);
         btnSalvar.addActionListener(action);
         btnExcluir.addActionListener(action);
@@ -35,6 +39,7 @@ public class CadastroAgendamento extends JInternalFrame {
     private void loadComboVei(){
         VeiculoDao dao = new VeiculoDao();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement(new ComboItem(0, ""));
         for(Veiculo m : dao.getAll() ) {
             model.addElement(new ComboItem(m.getCodVei(), m.getDescricao()));
         }
@@ -45,6 +50,7 @@ public class CadastroAgendamento extends JInternalFrame {
     private void loadComboMot(){
         MotoristaDao dao = new MotoristaDao();
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement(new ComboItem(0, ""));
         for(Motorista m : dao.getAll() ) {
             model.addElement(new ComboItem(m.getCodMot(), m.getNome()));
         }
@@ -52,24 +58,59 @@ public class CadastroAgendamento extends JInternalFrame {
         comboCodMotorista.setModel(model);
     }
     
+    public void setAgendamento(Agendamento a) {  
+        if (a.getCodAgend()== 0) {
+            txtCodigoAgendamento.setText("");
+        } else {
+            txtCodigoAgendamento.setText(a.getCodAgend().toString());
+        }
+        
+        txtDataIni.setText(a.getDataIni());
+        txtHoraIni.setText(a.getHoraIni());
+        txtKMInicial.setText(a.getKmIni().toString());
+        txtDataFin.setText(a.getDataFin());
+        txtHoraFin.setText(a.getHorafin());
+        txtKMFinal.setText(a.getKmFin().toString());
+        txtObs.setText(a.getObs());
+        comboStatus.setSelectedIndex(a.getStatus());
+        
+        ComboItem cbMot = new ComboItem(a.getCodMot(), "");
+        comboCodMotorista.setSelectedItem(cbMot);
+        
+        ComboItem cbVei = new ComboItem(a.getCodVei(), "");
+        comboCodVeiculo.setSelectedItem(cbVei);
+    } 
+    
     public Agendamento getAgendamento() {
         Agendamento a = new Agendamento();
-        if (txtCodigoAgendamento.getText().equals("")) {
-            a.setCodAgend(0);
-        } else {
+        
+        try {
             a.setCodAgend(Integer.valueOf(txtCodigoAgendamento.getText()));
+        } catch (Exception e) {
+            a.setCodAgend(0);
+        }
+        
+        try {
+            a.setKmIni(Integer.valueOf(txtKMInicial.getText()));
+        } catch (Exception e) {
+            a.setKmIni(0);
+        }
+        
+        try {
+            a.setKmFin(Integer.valueOf(txtKMFinal.getText()));
+        } catch (Exception e) {
+            a.setKmFin(0);
         }
         
         a.setDataIni(txtDataIni.getText());
         a.setHoraIni(txtHoraIni.getText());
-        a.setKmIni(Integer.valueOf(txtKMInicial.getText()));
         a.setHorafin(txtHoraFin.getText());
         a.setDataFin(txtDataFin.getText());
-        a.setKmFin(Integer.valueOf(txtKMFinal.getText()));
         a.setCodMot(((ComboItem)comboCodMotorista.getSelectedItem()).getValue());
         a.setCodVei(((ComboItem)comboCodVeiculo.getSelectedItem()).getValue());
         a.setObs(txtObs.getText());
         a.setStatus(comboStatus.getSelectedIndex());
+        
         return a;
     }
 
@@ -105,11 +146,12 @@ public class CadastroAgendamento extends JInternalFrame {
         comboCodMotorista = new javax.swing.JComboBox<>();
         btnExcluir = new javax.swing.JButton();
         comboStatus = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Agendamentos");
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Fechar");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("CADASTRO DE AGENDAMENTOS");
@@ -147,14 +189,12 @@ public class CadastroAgendamento extends JInternalFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtHoraIni.setText("  :  ");
 
         try {
             txtHoraFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        txtHoraFin.setText("  :  ");
 
         try {
             txtDataFin.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -170,6 +210,9 @@ public class CadastroAgendamento extends JInternalFrame {
 
         comboStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Agendado", "Em Andamento", "Finalizado" }));
 
+        btnBuscar.setText("Buscar");
+        btnBuscar.setMargin(new java.awt.Insets(2, 2, 2, 2));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,11 +224,15 @@ public class CadastroAgendamento extends JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCodigoAgendamento)
-                                    .addComponent(jLabel11)
-                                    .addComponent(comboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtCodigoAgendamento))
+                                    .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
+                                            .addComponent(txtCodigoAgendamento))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(btnBuscar)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -193,34 +240,34 @@ public class CadastroAgendamento extends JInternalFrame {
                                     .addComponent(lblDataSaida)
                                     .addComponent(lblDataRetorno)))
                             .addComponent(comboCodVeiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(0, 18, Short.MAX_VALUE)
+                                        .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblHoraRetorno)
+                                            .addComponent(lblHoraSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(txtHoraIni, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lblKmInicial)
+                                    .addComponent(lblKmFinal)
+                                    .addComponent(txtKMFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(txtKMInicial))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jLabel10))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(comboCodMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGap(0, 18, Short.MAX_VALUE)
-                                                .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(lblHoraRetorno)
-                                                    .addComponent(lblHoraSaida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(txtHoraIni, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(lblKmInicial)
-                                            .addComponent(lblKmFinal)
-                                            .addComponent(txtKMFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                            .addComponent(txtKMInicial))))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(comboCodMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel10)))
                                 .addContainerGap(28, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,11 +310,13 @@ public class CadastroAgendamento extends JInternalFrame {
                             .addComponent(lblHoraSaida)
                             .addComponent(lblKmInicial))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCodigoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtKMInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHoraIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtKMInicial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHoraIni, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtCodigoAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDataIni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
@@ -276,13 +325,14 @@ public class CadastroAgendamento extends JInternalFrame {
                                 .addComponent(lblHoraRetorno)
                                 .addComponent(lblDataRetorno)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtKMFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtKMFinal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtDataFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCodigoVeiculo)
                             .addComponent(jLabel10))
                         .addGap(32, 32, 32))
@@ -295,7 +345,7 @@ public class CadastroAgendamento extends JInternalFrame {
                 .addComponent(lblItininerario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtObs, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar)
@@ -309,6 +359,7 @@ public class CadastroAgendamento extends JInternalFrame {
 
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimpar;

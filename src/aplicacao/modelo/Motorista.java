@@ -48,6 +48,31 @@ public class Motorista {
         this.valCNH = valCNH;
     }
     
+    public String getTipoCNHDesc(){
+        String descricao = "";
+        switch(this.tipoCNH){
+            case 1:
+                descricao = "A";
+            break;
+            case 2:
+                descricao = "AB";
+            break;
+            case 3:
+                descricao = "B";
+            break;
+            case 4:
+                descricao = "C";
+            break;
+            case 5:
+                descricao = "D";
+            break;
+            case 6:
+                descricao = "E";
+            break;
+         }
+        return descricao;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if(obj == this) {

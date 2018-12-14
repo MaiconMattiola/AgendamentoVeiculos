@@ -165,16 +165,17 @@ public class AgendamentoDao {
             ResultSet rs = ps.executeQuery();
             while(rs.next()) {
                 Agendamento a = new Agendamento();
-                a.setDataIni(rs.getString(1));
-                a.setHoraIni(rs.getString(2));
-                a.setKmIni(rs.getInt(3));
-                a.setDataFin(rs.getString(4));
-                a.setHorafin(rs.getString(5));
-                a.setKmFin(rs.getInt(6));
-                a.setCodMot(rs.getInt(7));
-                a.setCodVei(rs.getInt(8));
-                a.setObs(rs.getString(9));
-                a.setStatus(rs.getInt(10));
+                a.setCodAgend(rs.getInt(1));
+                a.setDataIni(rs.getString(2));
+                a.setHoraIni(rs.getString(3));
+                a.setKmIni(rs.getInt(4));
+                a.setDataFin(rs.getString(5));
+                a.setHorafin(rs.getString(6));
+                a.setKmFin(rs.getInt(7));
+                a.setCodMot(rs.getInt(8));
+                a.setCodVei(rs.getInt(9));
+                a.setObs(rs.getString(10));
+                a.setStatus(rs.getInt(11));
                 lista.add(a);
             }
         } catch(SQLException e) {
@@ -209,16 +210,17 @@ public class AgendamentoDao {
             ResultSet rs = ps.executeQuery();
             if(rs.next()) {
                 Agendamento a = new Agendamento();
-                a.setDataIni(rs.getString(1));
-                a.setHoraIni(rs.getString(2));
-                a.setKmIni(rs.getInt(3));
-                a.setDataFin(rs.getString(4));
-                a.setHorafin(rs.getString(5));
-                a.setKmFin(rs.getInt(6));
-                a.setCodMot(rs.getInt(7));
-                a.setCodVei(rs.getInt(8));
-                a.setObs(rs.getString(9));
-                a.setStatus(rs.getInt(10));
+                a.setCodAgend(rs.getInt(1));
+                a.setDataIni(rs.getString(2));
+                a.setHoraIni(rs.getString(3));
+                a.setKmIni(rs.getInt(4));
+                a.setDataFin(rs.getString(5));
+                a.setHorafin(rs.getString(6));
+                a.setKmFin(rs.getInt(7));
+                a.setCodMot(rs.getInt(8));
+                a.setCodVei(rs.getInt(9));
+                a.setObs(rs.getString(10));
+                a.setStatus(rs.getInt(11));
                 return a;
             }
         } catch(SQLException e) {

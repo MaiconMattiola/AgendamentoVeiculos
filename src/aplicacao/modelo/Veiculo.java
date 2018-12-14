@@ -51,6 +51,25 @@ public class Veiculo {
         this.tipo = tipo;
     }
     
+    public String getTipoDesc() {
+        String descricao = "";
+        switch(this.tipo){
+            case 1:
+                descricao = "Carro";
+            break;
+            case 2:
+                descricao = "Utilitário";
+            break;
+            case 3:
+                descricao = "Caminhão";
+            break;
+            case 4:
+                descricao = "Cavalo Mecânico";
+            break;
+         }
+        return descricao;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if(obj == this) {

@@ -180,12 +180,12 @@ public class MotoristaDao {
         return lista;
     }
 
-    public Motorista getVeiculo(Integer codigo) {
+    public Motorista getMotorista(Integer codigo) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
             conn = Conexao.getConnection();
-            String sql = "select codMot, nome, CNH, tipoCNH, valCNH from veiculos where codMot = ?";
+            String sql = "select codMot, nome, CNH, tipoCNH, valCNH from motoristas where codMot = ?";
             ps = conn.prepareStatement(sql);
             ps.setInt(1, codigo);
             ResultSet rs = ps.executeQuery();

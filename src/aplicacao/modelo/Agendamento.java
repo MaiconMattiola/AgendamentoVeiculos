@@ -106,7 +106,21 @@ public class Agendamento {
         this.status = status;
     }
     
-    
+    public String getStatusDesc() {
+        String descricao = "";
+        switch(this.status){
+            case 0:
+                descricao = "AGENDADO";
+            break;
+            case 1:
+                descricao = "EM ANDAMENTO";
+            break;
+            case 2:
+                descricao = "FINALIZADO";
+            break;
+         }
+        return descricao;
+    }
     
     @Override
     public boolean equals(Object obj) {

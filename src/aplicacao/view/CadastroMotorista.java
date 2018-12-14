@@ -19,7 +19,8 @@ public class CadastroMotorista extends JInternalFrame {
     
     public CadastroMotorista() {
         initComponents();
-        
+        btnLimpar.addActionListener(action);
+        btnBuscar.addActionListener(action);
         btnCancelar.addActionListener(action);
         btnSalvar.addActionListener(action);
         btnExcluir.addActionListener(action);
@@ -32,17 +33,35 @@ public class CadastroMotorista extends JInternalFrame {
         }
     }
     
+    public void setMotorista(Motorista m) {  
+        if (m.getCodMot() == 0) {
+            txtCodigoMotorista.setText("");
+        } else {
+             txtCodigoMotorista.setText(m.getCodMot().toString());
+        }
+        txtNomeMotorista.setText(m.getNome());
+        comboTipoCNH.setSelectedIndex(m.getCNH());
+        txtNumeroCNH.setText(m.getCNH().toString());
+        txtValidadeCNH.setText(m.getValCNH());
+    }
+    
     public Motorista getMotorista() {
         Motorista m = new Motorista();
-        if (txtCodigoMotorista.getText().equals("")) {
-            m.setCodMot(0);
-        } else {
+        
+        try {
             m.setCodMot(Integer.valueOf(txtCodigoMotorista.getText()));
+        } catch (Exception e) {
+            m.setCodMot(0);
+        }
+        
+        try {
+            m.setCNH(Integer.valueOf(txtNumeroCNH.getText()));
+        } catch (Exception e) {
+            m.setCNH(0);
         }
         
         m.setNome(txtNomeMotorista.getText());
         m.setTipoCNH(comboTipoCNH.getSelectedIndex());
-        m.setCNH(Integer.valueOf(txtNumeroCNH.getText()));
         m.setValCNH(txtValidadeCNH.getText());
         return m;
     }
@@ -67,6 +86,7 @@ public class CadastroMotorista extends JInternalFrame {
         txtValidadeCNH = new javax.swing.JFormattedTextField();
         btnExcluir = new javax.swing.JButton();
         comboTipoCNH = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Motoristas");
@@ -86,7 +106,7 @@ public class CadastroMotorista extends JInternalFrame {
 
         btnLimpar.setText("Limpar");
 
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Fechar");
 
         btnSalvar.setText("Salvar");
 
@@ -98,13 +118,32 @@ public class CadastroMotorista extends JInternalFrame {
 
         btnExcluir.setText("Excluir");
 
-        comboTipoCNH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "AB", "B", "C", "D", "E", "ACC", "MOTOR-CASA" }));
+        comboTipoCNH.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "AB", "B", "C", "D", "E" }));
+
+        btnBuscar.setText("Buscar");
+        btnBuscar.setMargin(new java.awt.Insets(2, 2, 2, 2));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCodMotorista)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtCodigoMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(lblNomeMotorista)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNomeMotorista))))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -116,7 +155,7 @@ public class CadastroMotorista extends JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblNumeroCNH)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 109, Short.MAX_VALUE))
                             .addComponent(txtNumeroCNH))
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,29 +164,18 @@ public class CadastroMotorista extends JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(110, 110, 110)
                         .addComponent(jLabel1)
-                        .addGap(90, 92, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(btnLimpar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnExcluir)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCodMotorista)
-                            .addComponent(txtCodigoMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblNomeMotorista)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtNomeMotorista))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(btnLimpar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSalvar)
+                .addGap(10, 10, 10)
+                .addComponent(btnExcluir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,15 +184,17 @@ public class CadastroMotorista extends JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCodMotorista)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCodMotorista)
+                        .addGap(2, 2, 2)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCodigoMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNomeMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)))
                     .addComponent(lblNomeMotorista))
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCodigoMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNomeMotorista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(13, 13, 13)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTipoCNH)
                     .addComponent(lblValidCNH)
@@ -180,13 +210,14 @@ public class CadastroMotorista extends JInternalFrame {
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar)
                     .addComponent(btnExcluir))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnLimpar;
